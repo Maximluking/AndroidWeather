@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">AndroidWeather</string>
     <string name="weather_icon">Weather Icon</string>
+    <string name="temp">- C</string>
+    <string name="min_max_temp">-C/-C</string>
+    <string name="weather_description">No information</string>
+    <string name="settings">Settings</string>
 </resources>

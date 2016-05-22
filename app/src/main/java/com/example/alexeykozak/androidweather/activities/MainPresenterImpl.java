@@ -3,10 +3,9 @@ package com.example.alexeykozak.androidweather.activities;
 import android.content.Context;
 
 import com.example.alexeykozak.androidweather.model.Weather;
+import com.example.alexeykozak.androidweather.util.WeatherIconLoader;
 
-/**
- * Created by alexeykozak on 20.05.16.
- */
+
 public class MainPresenterImpl implements MainPresenter {
     private MainView mainView;
     private Context context;
@@ -19,7 +18,7 @@ public class MainPresenterImpl implements MainPresenter {
     @Override
     public void updateWeather(Weather weather) {
         mainView.showWeather(weather);
-        // mainView.showWeatherIcon();
+        mainView.showWeatherIcon(WeatherIconLoader.loadIcon(context, weather.getIcon()));
     }
 
     @Override

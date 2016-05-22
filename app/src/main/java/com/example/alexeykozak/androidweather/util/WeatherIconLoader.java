@@ -2,6 +2,7 @@ package com.example.alexeykozak.androidweather.util;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.util.Log;
 
 import com.squareup.picasso.Picasso;
 
@@ -13,6 +14,7 @@ public class WeatherIconLoader {
 
     public static Bitmap loadIcon(Context context, String icon) {
         String url = getUrl(icon);
+        Log.d(TAG, "icon url:" + url);
         Bitmap bitmap = null;
         try {
             bitmap = Picasso.with(context).load(url).get();
