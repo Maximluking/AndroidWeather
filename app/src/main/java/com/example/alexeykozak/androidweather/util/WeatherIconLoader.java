@@ -14,7 +14,7 @@ public class WeatherIconLoader {
 
     public static Bitmap loadIcon(Context context, String icon) {
         String url = getUrl(icon);
-        Log.d(TAG, "icon url:" + url);
+        Log.d(TAG, "ICON url:" + url);
         Bitmap bitmap = null;
         try {
             bitmap = Picasso.with(context).load(url).get();

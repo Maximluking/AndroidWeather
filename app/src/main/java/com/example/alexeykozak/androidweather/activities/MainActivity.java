@@ -8,7 +8,6 @@ import android.widget.TextView;
 
 import com.example.alexeykozak.androidweather.R;
 import com.example.alexeykozak.androidweather.model.Weather;
-import com.example.alexeykozak.androidweather.util.WeatherAsyncGetter;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -27,9 +26,9 @@ public class MainActivity extends AppCompatActivity implements MainView {
     private static final String CELSIUS_DEGREE = "°C";
     private static final String DIVIDER = "/";
 
-    MainPresenter presenter;
-    Unbinder unbinder;
-    WeatherAsyncGetter weatherAsyncGetter;
+    private MainPresenter presenter;
+    private Unbinder unbinder;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,14 +37,13 @@ public class MainActivity extends AppCompatActivity implements MainView {
         unbinder = ButterKnife.bind(this);
         presenter = new MainPresenterImpl(this, getApplicationContext());
 
-        weatherAsyncGetter = new WeatherAsyncGetter();
-
 
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+        presenter.updateWeatherInfo();
 
 
     }

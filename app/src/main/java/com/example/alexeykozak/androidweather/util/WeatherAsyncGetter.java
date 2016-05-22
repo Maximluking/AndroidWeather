@@ -3,6 +3,7 @@ package com.example.alexeykozak.androidweather.util;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.example.alexeykozak.androidweather.dao.WeatherDao;
 import com.example.alexeykozak.androidweather.model.Weather;
 
 import org.json.JSONArray;
@@ -40,8 +41,10 @@ public class WeatherAsyncGetter extends AsyncTask<Integer, Void, List<Weather>> 
     }
 
     @Override
-    protected void onPostExecute(List<Weather> weathers) {
-        super.onPostExecute(weathers);
+    protected void onPostExecute(List<Weather> weatherList) {
+        Log.d(TAG, "weather received");
+        WeatherDao.getInstance().updateWeather(weatherList);
+
     }
 
     private List<Weather> parseJson(JSONObject jsonObject) {
@@ -61,8 +64,8 @@ public class WeatherAsyncGetter extends AsyncTask<Integer, Void, List<Weather>> 
                     weather.setCurrentTemp(jsonWeather.getJSONObject("main").getInt("temp"));
                     weather.setMaxTemp(jsonWeather.getJSONObject("main").getInt("temp_max"));
                     weather.setMinTemp(jsonWeather.getJSONObject("main").getInt("temp_min"));
-                    weather.setDescription(jsonWeather.getJSONArray("weather").getJSONObject(0).getString("description"));
-                    weather.setIcon(jsonWeather.getJSONArray("weather").getJSONObject(0).getString("icon"));
+                    weather.setDescription(jsonWeather.getJSONArray("weather").getJSONObject(0).getString("DESCRIPTION"));
+                    weather.setIcon(jsonWeather.getJSONArray("weather").getJSONObject(0).getString("ICON"));
 
                 } catch (JSONException e) {
                     e.printStackTrace();

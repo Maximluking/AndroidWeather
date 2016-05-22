@@ -3,11 +3,20 @@ package com.example.alexeykozak.androidweather.model;
 
 public class Weather {
 
-    public float currentTemp;
-    public float maxTemp;
-    public float minTemp;
-    public String icon;
-    public String description;
+    private float currentTemp;
+    private float maxTemp;
+    private float minTemp;
+    private String icon;
+    private String description;
+    private int cityId;
+
+    public int getCityId() {
+        return cityId;
+    }
+
+    public void setCityId(int cityId) {
+        this.cityId = cityId;
+    }
 
     public float getCurrentTemp() {
         return currentTemp;

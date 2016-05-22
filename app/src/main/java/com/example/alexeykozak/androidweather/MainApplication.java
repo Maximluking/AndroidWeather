@@ -10,7 +10,6 @@ public class MainApplication extends Application {
     private static Context context;
 
     @Override
-
     public void onCreate() {
         super.onCreate();
         context = getApplicationContext();
@@ -22,5 +21,9 @@ public class MainApplication extends Application {
         built.setIndicatorsEnabled(false);
         built.setLoggingEnabled(false);
         Picasso.setSingletonInstance(built);
+    }
+
+    public static Context getContext() {
+        return context;
     }
 }

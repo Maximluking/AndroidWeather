@@ -5,4 +5,6 @@
     <string name="min_max_temp">-C/-C</string>
     <string name="weather_description">No information</string>
     <string name="settings">Settings</string>
+    <string name="preference_file_key">prefs</string>
+    <string name="current_city_id">709930</string>
 </resources>

@@ -2,8 +2,10 @@ package com.example.alexeykozak.androidweather.model;
 
 
 public class City {
-    public int id;
-    public String name;
+
+    private String name;
+    private Weather weather;
+    private int id;
 
     public int getId() {
         return id;
@@ -20,4 +22,14 @@ public class City {
     public void setName(String name) {
         this.name = name;
     }
+
+    public Weather getWeather() {
+        return weather;
+    }
+
+    public void setWeather(Weather weather) {
+        this.weather = weather;
+    }
+
+
 }
