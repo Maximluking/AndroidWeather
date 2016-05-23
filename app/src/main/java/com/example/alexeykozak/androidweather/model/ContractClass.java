@@ -5,6 +5,7 @@ public class ContractClass {
     public static final class Weather {
         public static final String TABLE_NAME = "weather";
 
+        public static final String COLUMN_NAME_ID = "id";
         public static final String COLUMN_NAME_CURRENT_TEMP = "current_temp";
         public static final String COLUMN_NAME_MAX_TEMP = "max_temp";
         public static final String COLUMN_NAME_MIN_TEMP = "min_temp";
@@ -13,6 +14,7 @@ public class ContractClass {
         public static final String COLUMN_NAME_CITY_FK_ID = "city_fk_id";
 
         public static final String[] DEFAULT_PROJECTION = new String[]{
+                Weather.COLUMN_NAME_ID,
                 Weather.COLUMN_NAME_CURRENT_TEMP,
                 Weather.COLUMN_NAME_MAX_TEMP,
                 Weather.COLUMN_NAME_MIN_TEMP,

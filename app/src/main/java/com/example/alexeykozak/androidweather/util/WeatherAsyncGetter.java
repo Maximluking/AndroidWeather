@@ -24,7 +24,7 @@ public class WeatherAsyncGetter extends AsyncTask<Integer, Void, List<Weather>> 
     private static final String cityId = "id=";
     private static final String apiKey = "APPID=6f279ed3e8d8248f7b0d79f7589dc5c9";
     private static final String units = "units=metric";
-    private static final String language = "lang=ru";
+    private static final String language = "lang=en";
     private static final String TAG = "weatherAsyncGetter";
 
     /**
@@ -34,7 +34,6 @@ public class WeatherAsyncGetter extends AsyncTask<Integer, Void, List<Weather>> 
     @Override
     protected List<Weather> doInBackground(Integer... params) {
         String url = getUrl(params);
-
         JSONObject jsonObject = getJson(url);
 
         return parseJson(jsonObject);
@@ -43,8 +42,8 @@ public class WeatherAsyncGetter extends AsyncTask<Integer, Void, List<Weather>> 
     @Override
     protected void onPostExecute(List<Weather> weatherList) {
         Log.d(TAG, "weather received");
-        WeatherDao.getInstance().updateWeather(weatherList);
 
+        WeatherDao.getInstance().createOrUpdateWeather(weatherList);
     }
 
     private List<Weather> parseJson(JSONObject jsonObject) {
@@ -60,12 +59,12 @@ public class WeatherAsyncGetter extends AsyncTask<Integer, Void, List<Weather>> 
                 Weather weather = new Weather();
                 try {
                     JSONObject jsonWeather = rootJsonArray.getJSONObject(i);
-
+                    weather.setCityId(jsonWeather.getInt("id"));
                     weather.setCurrentTemp(jsonWeather.getJSONObject("main").getInt("temp"));
                     weather.setMaxTemp(jsonWeather.getJSONObject("main").getInt("temp_max"));
                     weather.setMinTemp(jsonWeather.getJSONObject("main").getInt("temp_min"));
-                    weather.setDescription(jsonWeather.getJSONArray("weather").getJSONObject(0).getString("DESCRIPTION"));
-                    weather.setIcon(jsonWeather.getJSONArray("weather").getJSONObject(0).getString("ICON"));
+                    weather.setDescription(jsonWeather.getJSONArray("weather").getJSONObject(0).getString("description"));
+                    weather.setIcon(jsonWeather.getJSONArray("weather").getJSONObject(0).getString("icon"));
 
                 } catch (JSONException e) {
                     e.printStackTrace();

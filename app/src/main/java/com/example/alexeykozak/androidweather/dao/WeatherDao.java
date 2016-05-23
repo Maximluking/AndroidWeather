@@ -3,6 +3,7 @@ package com.example.alexeykozak.androidweather.dao;
 
 import android.content.ContentValues;
 import android.database.Cursor;
+import android.util.Log;
 
 import com.example.alexeykozak.androidweather.model.City;
 import com.example.alexeykozak.androidweather.model.ContractClass;
@@ -14,16 +15,12 @@ import java.util.List;
 public class WeatherDao {
     public static final String TAG = "TrackDao";
 
-    private WeatherDbHelper db;
+    private static WeatherDbHelper db;
     private static WeatherDao instance;
 
     private WeatherDao() {
         db = new WeatherDbHelper(WeatherDbHelper.DATABASE_NAME);
     }
-
-//    public WeatherDao(WeatherDbHelper weatherDbHelper) {
-//        db = weatherDbHelper;
-//    }
 
     public static WeatherDao getInstance() {
         if (instance == null) {
@@ -36,20 +33,41 @@ public class WeatherDao {
         return instance;
     }
 
-    public void updateWeather(List<Weather> weatherList) {
+    public void createOrUpdateWeather(List<Weather> weatherList) {
         for (int i = 0; i < weatherList.size(); i++) {
             Weather weather = weatherList.get(i);
             ContentValues values = new ContentValues();
 
-            values.put(ContractClass.Weather.COLUMN_NAME_CITY_FK_ID, weather.getCityId());
             values.put(ContractClass.Weather.COLUMN_NAME_CURRENT_TEMP, weather.getCurrentTemp());
             values.put(ContractClass.Weather.COLUMN_NAME_MAX_TEMP, weather.getMaxTemp());
             values.put(ContractClass.Weather.COLUMN_NAME_MIN_TEMP, weather.getMinTemp());
+            values.put(ContractClass.Weather.COLUMN_NAME_ICON, weather.getIcon());
             values.put(ContractClass.Weather.COLUMN_NAME_DESCRIPTION, weather.getDescription());
 
-            db.getWritableDatabase().insert(ContractClass.Weather.TABLE_NAME, null, values);
+            if (getWeatherByCityId(weather.getCityId()).getCityId() == weather.getCityId()) {
 
-            values.clear();
+                String query = "UPDATE " + ContractClass.Weather.TABLE_NAME + " SET " +
+                        ContractClass.Weather.COLUMN_NAME_CURRENT_TEMP + "= ?, " +
+                        ContractClass.Weather.COLUMN_NAME_MAX_TEMP + " =?, " +
+                        ContractClass.Weather.COLUMN_NAME_MIN_TEMP + " =?, " +
+                        ContractClass.Weather.COLUMN_NAME_ICON + " =?, " +
+                        ContractClass.Weather.COLUMN_NAME_DESCRIPTION + "= ?" +
+                        " WHERE " + ContractClass.Weather.COLUMN_NAME_CITY_FK_ID + " = " + weather.getCityId();
+                String[] attributes = new String[]{
+                        String.valueOf(weather.getCurrentTemp()),
+                        String.valueOf(weather.getMaxTemp()),
+                        String.valueOf(weather.getMinTemp()),
+                        weather.getIcon(),
+                        weather.getDescription()};
+                Log.d(TAG, "Updating weather");
+
+                db.getWritableDatabase().rawQuery(query, attributes);
+            } else {
+                Log.d(TAG, "Inserting weather");
+
+                values.put(ContractClass.Weather.COLUMN_NAME_CITY_FK_ID, weather.getCityId());
+                db.getWritableDatabase().insert(ContractClass.Weather.TABLE_NAME, null, values);
+            }
         }
     }
 
@@ -94,17 +112,14 @@ public class WeatherDao {
 
     public Weather getWeatherByCityId(int id) {
         Weather weather = new Weather();
-        Cursor cursor = db.getReadableDatabase().query(
-                ContractClass.Weather.TABLE_NAME,
-                ContractClass.Weather.DEFAULT_PROJECTION,
-                ContractClass.Weather.COLUMN_NAME_CITY_FK_ID,
-                new String[]{String.valueOf(id)},
-                null,
-                null,
-                null,
-                null);
+
+        String query = "SELECT * FROM " + ContractClass.Weather.TABLE_NAME + " WHERE " +
+                ContractClass.Weather.COLUMN_NAME_CITY_FK_ID + "=?;";
+
+        Cursor cursor = db.getReadableDatabase().rawQuery(query, new String[]{String.valueOf(id)});
 
         if (cursor.moveToFirst()) {
+            weather.setCityId(cursor.getInt(cursor.getColumnIndex(ContractClass.Weather.COLUMN_NAME_CITY_FK_ID)));
             weather.setCurrentTemp(cursor.getFloat(cursor.getColumnIndex(ContractClass.Weather.COLUMN_NAME_CURRENT_TEMP)));
             weather.setMaxTemp(cursor.getFloat(cursor.getColumnIndex(ContractClass.Weather.COLUMN_NAME_MAX_TEMP)));
             weather.setMinTemp(cursor.getFloat(cursor.getColumnIndex(ContractClass.Weather.COLUMN_NAME_MIN_TEMP)));
@@ -114,6 +129,4 @@ public class WeatherDao {
         cursor.close();
         return weather;
     }
-
-
 }

@@ -13,6 +13,7 @@ public class MainPresenterImpl implements MainPresenter {
     private MainView mainView;
     private Context context;
 
+
     public MainPresenterImpl(MainView mainView, Context context) {
         this.mainView = mainView;
         this.context = context;
@@ -24,7 +25,8 @@ public class MainPresenterImpl implements MainPresenter {
         int id;
 
         SharedPreferences sharedPref = context.getSharedPreferences(context.getString(R.string.preference_file_key), Context.MODE_PRIVATE);
-        id = sharedPref.getInt(context.getString(R.string.current_city_id), 0);
+        id = sharedPref.getInt(context.getString(R.string.preference_file_key), 0);
+
         Weather weather = WeatherDao.getInstance().getWeatherByCityId(id);
 
         mainView.showWeather(weather);
