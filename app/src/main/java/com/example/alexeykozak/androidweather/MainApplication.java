@@ -19,7 +19,8 @@ public class MainApplication extends Application {
         Picasso built = builder.build();
         built.setIndicatorsEnabled(true);
         built.setIndicatorsEnabled(false);
-        built.setLoggingEnabled(false);
+        built.setLoggingEnabled(true);
+
         Picasso.setSingletonInstance(built);
     }
 

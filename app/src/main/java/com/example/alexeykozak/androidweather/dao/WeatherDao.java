@@ -45,29 +45,14 @@ public class WeatherDao {
             values.put(ContractClass.Weather.COLUMN_NAME_DESCRIPTION, weather.getDescription());
 
             if (getWeatherByCityId(weather.getCityId()).getCityId() == weather.getCityId()) {
-
-                String query = "UPDATE " + ContractClass.Weather.TABLE_NAME + " SET " +
-                        ContractClass.Weather.COLUMN_NAME_CURRENT_TEMP + "= ?, " +
-                        ContractClass.Weather.COLUMN_NAME_MAX_TEMP + " =?, " +
-                        ContractClass.Weather.COLUMN_NAME_MIN_TEMP + " =?, " +
-                        ContractClass.Weather.COLUMN_NAME_ICON + " =?, " +
-                        ContractClass.Weather.COLUMN_NAME_DESCRIPTION + "= ?" +
-                        " WHERE " + ContractClass.Weather.COLUMN_NAME_CITY_FK_ID + " = " + weather.getCityId();
-                String[] attributes = new String[]{
-                        String.valueOf(weather.getCurrentTemp()),
-                        String.valueOf(weather.getMaxTemp()),
-                        String.valueOf(weather.getMinTemp()),
-                        weather.getIcon(),
-                        weather.getDescription()};
-                Log.d(TAG, "Updating weather");
-
-                db.getWritableDatabase().rawQuery(query, attributes);
-            } else {
-                Log.d(TAG, "Inserting weather");
-
-                values.put(ContractClass.Weather.COLUMN_NAME_CITY_FK_ID, weather.getCityId());
-                db.getWritableDatabase().insert(ContractClass.Weather.TABLE_NAME, null, values);
+                db.getWritableDatabase().delete(ContractClass.Weather.TABLE_NAME,
+                        ContractClass.Weather.COLUMN_NAME_CITY_FK_ID + " = ?",
+                        new String[]{String.valueOf(weather.getCityId())});
             }
+            Log.d(TAG, "Inserting weather");
+
+            values.put(ContractClass.Weather.COLUMN_NAME_CITY_FK_ID, weather.getCityId());
+            db.getWritableDatabase().insert(ContractClass.Weather.TABLE_NAME, null, values);
         }
     }
 

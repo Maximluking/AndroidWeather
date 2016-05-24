@@ -2,7 +2,6 @@ package com.example.alexeykozak.androidweather.activities;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -12,6 +11,7 @@ import android.widget.TextView;
 import com.example.alexeykozak.androidweather.R;
 import com.example.alexeykozak.androidweather.model.Weather;
 import com.example.alexeykozak.androidweather.util.WeatherAsyncGetter;
+import com.squareup.picasso.Picasso;
 
 import java.util.concurrent.ExecutionException;
 
@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity implements MainView {
     @Override
     protected void onResume() {
         super.onResume();
-//        presenter.updateWeatherInfo();
+        presenter.updateWeatherInfo();
     }
 
     @Override
@@ -83,7 +83,7 @@ public class MainActivity extends AppCompatActivity implements MainView {
     }
 
     @Override
-    public void showWeatherIcon(Bitmap bitmap) {
-        imageView.setImageBitmap(bitmap);
+    public void showWeatherIcon(String iconUrl) {
+        Picasso.with(getBaseContext()).load(iconUrl).into(imageView);
     }
 }

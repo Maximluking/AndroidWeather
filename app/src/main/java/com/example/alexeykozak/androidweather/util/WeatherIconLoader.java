@@ -16,6 +16,7 @@ public class WeatherIconLoader {
         String url = getUrl(icon);
         Log.d(TAG, "ICON url:" + url);
         Bitmap bitmap = null;
+
         try {
             bitmap = Picasso.with(context).load(url).get();
         } catch (IOException e) {

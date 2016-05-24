@@ -10,7 +10,7 @@ import com.example.alexeykozak.androidweather.model.ContractClass;
 public class WeatherDbHelper extends SQLiteOpenHelper {
     private static final String TAG = "WeatherDbHelper";
 
-    public static final int DATABASE_VERSION = 5;
+    public static final int DATABASE_VERSION = 6;
     public static final String DATABASE_NAME = "Weather.db";
 
     private static final String PRIMARY_KEY = " PRIMARY KEY";
@@ -27,7 +27,7 @@ public class WeatherDbHelper extends SQLiteOpenHelper {
 
     private static final String SQL_CREATE_WEATHER_TABLE =
             "CREATE TABLE " + ContractClass.Weather.TABLE_NAME + " (" +
-                    ContractClass.Weather.COLUMN_NAME_ID + INT_TYPE + PRIMARY_KEY + COMMA_SEP +
+
                     ContractClass.Weather.COLUMN_NAME_CURRENT_TEMP + DOUBLE_TYPE + COMMA_SEP +
                     ContractClass.Weather.COLUMN_NAME_MAX_TEMP + DOUBLE_TYPE + COMMA_SEP +
                     ContractClass.Weather.COLUMN_NAME_MIN_TEMP + DOUBLE_TYPE + COMMA_SEP +
@@ -43,7 +43,7 @@ public class WeatherDbHelper extends SQLiteOpenHelper {
                     ContractClass.City.COLUMN_NAME_NAME + TEXT_TYPE + COMMA_SEP +
                     ContractClass.City.COLUMN_NAME_WEATHER_FK_ID + INT_TYPE + COMMA_SEP +
                     FOREIGN_KEY + " (" + ContractClass.City.COLUMN_NAME_WEATHER_FK_ID + ") " +
-                    REFERENCES + " " + ContractClass.Weather.TABLE_NAME + " (" + ContractClass.Weather.COLUMN_NAME_ID +
+                    REFERENCES + " " + ContractClass.Weather.TABLE_NAME + " (" + ContractClass.Weather.COLUMN_NAME_CITY_FK_ID +
                     " ));";
 
     public WeatherDbHelper(String name) {

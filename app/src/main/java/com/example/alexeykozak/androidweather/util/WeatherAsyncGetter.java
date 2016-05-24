@@ -3,6 +3,7 @@ package com.example.alexeykozak.androidweather.util;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.example.alexeykozak.androidweather.activities.MainPresenterImpl;
 import com.example.alexeykozak.androidweather.dao.WeatherDao;
 import com.example.alexeykozak.androidweather.model.Weather;
 
@@ -17,7 +18,6 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-
 
 public class WeatherAsyncGetter extends AsyncTask<Integer, Void, List<Weather>> {
     private static final String mainUrl = "http://api.openweathermap.org/data/2.5/group?";
@@ -44,6 +44,8 @@ public class WeatherAsyncGetter extends AsyncTask<Integer, Void, List<Weather>> 
         Log.d(TAG, "weather received");
 
         WeatherDao.getInstance().createOrUpdateWeather(weatherList);
+
+        MainPresenterImpl.onWeatherReceived();
     }
 
     private List<Weather> parseJson(JSONObject jsonObject) {

@@ -11,22 +11,24 @@
 
     <ImageView
         android:id="@+id/settings"
-        android:contentDescription="@string/settings"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
+        android:contentDescription="@string/settings"
         android:src="@drawable/ic_settings_black_48dp" />
 
     <ImageView
         android:id="@+id/weather_icon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_margin="@dimen/weather_icon_margin"
+        android:layout_marginLeft="@dimen/weather_icon_margin"
+        android:layout_marginStart="@dimen/weather_icon_margin"
+        android:layout_marginTop="@dimen/weather_icon_margin"
         android:contentDescription="@string/weather_icon"
         android:src="@drawable/ic_loop_black_48dp" />
 
