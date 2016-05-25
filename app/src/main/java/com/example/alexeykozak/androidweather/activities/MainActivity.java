@@ -12,10 +12,7 @@ import android.widget.TextView;
 import com.example.alexeykozak.androidweather.R;
 import com.example.alexeykozak.androidweather.model.City;
 import com.example.alexeykozak.androidweather.model.Weather;
-import com.example.alexeykozak.androidweather.util.WeatherAsyncGetter;
 import com.squareup.picasso.Picasso;
-
-import java.util.concurrent.ExecutionException;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -55,13 +52,7 @@ public class MainActivity extends AppCompatActivity implements MainView {
             editor.putInt(getString(R.string.current_city_id), 709930).apply();
         }
 
-        WeatherAsyncGetter weatherAsyncGetter = new WeatherAsyncGetter();
-        weatherAsyncGetter.execute(709930, 702550, 696050);
-        try {
-            Log.d(TAG, String.valueOf(weatherAsyncGetter.get().size()));
-        } catch (InterruptedException | ExecutionException e) {
-            e.printStackTrace();
-        }
+        presenter.makeRequest();
     }
 
     @Override

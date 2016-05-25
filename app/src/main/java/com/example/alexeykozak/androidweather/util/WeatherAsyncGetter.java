@@ -1,5 +1,6 @@
 package com.example.alexeykozak.androidweather.util;
 
+import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -26,6 +27,11 @@ public class WeatherAsyncGetter extends AsyncTask<Integer, Void, List<Weather>> 
     private static final String units = "units=metric";
     private static final String language = "lang=en";
     private static final String TAG = "weatherAsyncGetter";
+    private Context context;
+
+    public WeatherAsyncGetter(Context context) {
+        this.context = context;
+    }
 
     /**
      * @param params This parameter is integer array with city id
