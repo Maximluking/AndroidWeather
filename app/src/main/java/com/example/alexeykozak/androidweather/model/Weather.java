@@ -3,9 +3,9 @@ package com.example.alexeykozak.androidweather.model;
 
 public class Weather {
 
-    private float currentTemp;
-    private float maxTemp;
-    private float minTemp;
+    private int currentTemp;
+    private int maxTemp;
+    private int minTemp;
     private String icon;
     private String description;
     private int cityId;
@@ -18,27 +18,27 @@ public class Weather {
         this.cityId = cityId;
     }
 
-    public float getCurrentTemp() {
+    public int getCurrentTemp() {
         return currentTemp;
     }
 
-    public void setCurrentTemp(float currentTemp) {
+    public void setCurrentTemp(int currentTemp) {
         this.currentTemp = currentTemp;
     }
 
-    public float getMaxTemp() {
+    public int getMaxTemp() {
         return maxTemp;
     }
 
-    public void setMaxTemp(float maxTemp) {
+    public void setMaxTemp(int maxTemp) {
         this.maxTemp = maxTemp;
     }
 
-    public float getMinTemp() {
+    public int getMinTemp() {
         return minTemp;
     }
 
-    public void setMinTemp(float minTemp) {
+    public void setMinTemp(int minTemp) {
         this.minTemp = minTemp;
     }
 

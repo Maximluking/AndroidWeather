@@ -10,7 +10,7 @@ import com.example.alexeykozak.androidweather.model.ContractClass;
 public class WeatherDbHelper extends SQLiteOpenHelper {
     private static final String TAG = "WeatherDbHelper";
 
-    public static final int DATABASE_VERSION = 6;
+    public static final int DATABASE_VERSION = 7;
     public static final String DATABASE_NAME = "Weather.db";
 
     private static final String PRIMARY_KEY = " PRIMARY KEY";
@@ -20,17 +20,15 @@ public class WeatherDbHelper extends SQLiteOpenHelper {
 
     private static final String TEXT_TYPE = " TEXT";
     private static final String INT_TYPE = " INTEGER";
-    private static final String DOUBLE_TYPE = " REAL";
-
 
     private static final String COMMA_SEP = ",";
 
     private static final String SQL_CREATE_WEATHER_TABLE =
             "CREATE TABLE " + ContractClass.Weather.TABLE_NAME + " (" +
 
-                    ContractClass.Weather.COLUMN_NAME_CURRENT_TEMP + DOUBLE_TYPE + COMMA_SEP +
-                    ContractClass.Weather.COLUMN_NAME_MAX_TEMP + DOUBLE_TYPE + COMMA_SEP +
-                    ContractClass.Weather.COLUMN_NAME_MIN_TEMP + DOUBLE_TYPE + COMMA_SEP +
+                    ContractClass.Weather.COLUMN_NAME_CURRENT_TEMP + INT_TYPE + COMMA_SEP +
+                    ContractClass.Weather.COLUMN_NAME_MAX_TEMP + INT_TYPE + COMMA_SEP +
+                    ContractClass.Weather.COLUMN_NAME_MIN_TEMP + INT_TYPE + COMMA_SEP +
                     ContractClass.Weather.COLUMN_NAME_DESCRIPTION + TEXT_TYPE + COMMA_SEP +
                     ContractClass.Weather.COLUMN_NAME_ICON + TEXT_TYPE + COMMA_SEP +
                     ContractClass.Weather.COLUMN_NAME_CITY_FK_ID + INT_TYPE + COMMA_SEP +

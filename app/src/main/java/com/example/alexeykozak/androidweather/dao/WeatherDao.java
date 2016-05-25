@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class WeatherDao {
-    public static final String TAG = "TrackDao";
+    public static final String TAG = "WeatherDao";
 
     private static WeatherDbHelper db;
     private static WeatherDao instance;
@@ -77,7 +77,7 @@ public class WeatherDao {
         City city = new City();
         Cursor cursor = db.getReadableDatabase().query(ContractClass.City.TABLE_NAME,
                 ContractClass.City.DEFAULT_PROJECTION,
-                ContractClass.City.COLUMN_NAME_ID,
+                ContractClass.City.COLUMN_NAME_ID + " = ?",
                 new String[]{String.valueOf(cityId)},
                 null,
                 null,
@@ -105,9 +105,9 @@ public class WeatherDao {
 
         if (cursor.moveToFirst()) {
             weather.setCityId(cursor.getInt(cursor.getColumnIndex(ContractClass.Weather.COLUMN_NAME_CITY_FK_ID)));
-            weather.setCurrentTemp(cursor.getFloat(cursor.getColumnIndex(ContractClass.Weather.COLUMN_NAME_CURRENT_TEMP)));
-            weather.setMaxTemp(cursor.getFloat(cursor.getColumnIndex(ContractClass.Weather.COLUMN_NAME_MAX_TEMP)));
-            weather.setMinTemp(cursor.getFloat(cursor.getColumnIndex(ContractClass.Weather.COLUMN_NAME_MIN_TEMP)));
+            weather.setCurrentTemp(cursor.getInt(cursor.getColumnIndex(ContractClass.Weather.COLUMN_NAME_CURRENT_TEMP)));
+            weather.setMaxTemp(cursor.getInt(cursor.getColumnIndex(ContractClass.Weather.COLUMN_NAME_MAX_TEMP)));
+            weather.setMinTemp(cursor.getInt(cursor.getColumnIndex(ContractClass.Weather.COLUMN_NAME_MIN_TEMP)));
             weather.setDescription(cursor.getString(cursor.getColumnIndex(ContractClass.Weather.COLUMN_NAME_DESCRIPTION)));
             weather.setIcon(cursor.getString(cursor.getColumnIndex(ContractClass.Weather.COLUMN_NAME_ICON)));
         }

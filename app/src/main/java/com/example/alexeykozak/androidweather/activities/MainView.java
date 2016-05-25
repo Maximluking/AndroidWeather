@@ -1,10 +1,10 @@
 package com.example.alexeykozak.androidweather.activities;
 
-import com.example.alexeykozak.androidweather.model.Weather;
+import com.example.alexeykozak.androidweather.model.City;
 
 
 public interface MainView {
-    void showWeather(Weather weather);
+    void showWeatherForCity(City city);
 
     void showWeatherIcon(String iconUrl);
 }

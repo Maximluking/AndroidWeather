@@ -9,13 +9,20 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".activities.MainActivity">
 
+    <TextView
+        android:id="@+id/tv_city_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:textSize="@dimen/default_text_size" />
+
     <ImageView
         android:id="@+id/settings"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
         android:contentDescription="@string/settings"
         android:src="@drawable/ic_settings_black_48dp" />
 
@@ -25,10 +32,9 @@
         android:layout_height="48dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="@dimen/weather_icon_margin"
-        android:layout_marginStart="@dimen/weather_icon_margin"
-        android:layout_marginTop="@dimen/weather_icon_margin"
+        android:layout_below="@id/tv_city_name"
+
+        android:layout_margin="@dimen/activity_horizontal_margin"
         android:contentDescription="@string/weather_icon"
         android:src="@drawable/ic_loop_black_48dp" />
 
@@ -36,10 +42,9 @@
         android:id="@+id/tv_temp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/settings"
-        android:layout_margin="@dimen/activity_vertical_margin"
-        android:layout_toEndOf="@id/weather_icon"
-        android:layout_toRightOf="@id/weather_icon"
+        android:layout_alignTop="@id/weather_icon"
+        android:layout_centerHorizontal="true"
+
         android:text="@string/temp"
         android:textSize="@dimen/main_temp_text_size" />
 
@@ -47,9 +52,9 @@
         android:id="@+id/tv_max_min_temp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@id/tv_temp"
-        android:layout_alignStart="@id/tv_temp"
         android:layout_below="@id/tv_temp"
+
+        android:layout_centerHorizontal="true"
         android:text="@string/min_max_temp"
         android:textSize="@dimen/default_text_size" />
 
@@ -57,9 +62,9 @@
         android:id="@+id/tv_weather_description"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@id/tv_temp"
-        android:layout_alignStart="@id/tv_temp"
         android:layout_below="@id/tv_max_min_temp"
+
+        android:layout_centerHorizontal="true"
         android:text="@string/weather_description"
         android:textSize="@dimen/default_text_size" />
 

@@ -1,5 +1,6 @@
 package com.example.alexeykozak.androidweather.activities;
 
+import android.app.FragmentManager;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -9,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.alexeykozak.androidweather.R;
+import com.example.alexeykozak.androidweather.model.City;
 import com.example.alexeykozak.androidweather.model.Weather;
 import com.example.alexeykozak.androidweather.util.WeatherAsyncGetter;
 import com.squareup.picasso.Picasso;
@@ -17,21 +19,28 @@ import java.util.concurrent.ExecutionException;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 
 public class MainActivity extends AppCompatActivity implements MainView {
 
     private static final String TAG = "MainActivity";
+    private static final String CELSIUS_DEGREE = "°C";
+    private static final String DIVIDER = "/";
+    private static final String FRAGMENT_TAG = "ListOfCities";
+
+
     @BindView(R.id.weather_icon)
     ImageView imageView;
+    @BindView(R.id.tv_city_name)
+    TextView tvCityName;
     @BindView(R.id.tv_temp)
     TextView tvTemp;
     @BindView(R.id.tv_max_min_temp)
     TextView tvMaxMinTemp;
     @BindView(R.id.tv_weather_description)
     TextView tvWeatherDescription;
-    private static final String CELSIUS_DEGREE = "°C";
-    private static final String DIVIDER = "/";
+
 
     private MainPresenter presenter;
     private Unbinder unbinder;
@@ -59,10 +68,19 @@ public class MainActivity extends AppCompatActivity implements MainView {
     }
 
     @Override
+    protected void onPause() {
+        Log.d(TAG, "OnPause");
+
+        super.onPause();
+    }
+
+    @Override
     protected void onResume() {
         super.onResume();
-        presenter.updateWeatherInfo();
+        Log.d(TAG, "OnResume");
+        presenter.updateCityInfo();
     }
+
 
     @Override
     protected void onDestroy() {
@@ -71,11 +89,14 @@ public class MainActivity extends AppCompatActivity implements MainView {
     }
 
     @Override
-    public void showWeather(Weather weather) {
+    public void showWeatherForCity(City city) {
+        Weather weather = city.getWeather();
+
         String temp = String.valueOf(weather.getCurrentTemp()) + CELSIUS_DEGREE;
         String minMaxTemp = String.valueOf(weather.getMinTemp()) + CELSIUS_DEGREE + DIVIDER +
                 String.valueOf(weather.getMaxTemp()) + CELSIUS_DEGREE;
 
+        tvCityName.setText(city.getName());
         tvTemp.setText(temp);
         tvMaxMinTemp.setText(minMaxTemp);
         tvWeatherDescription.setText(weather.getDescription());
@@ -86,4 +107,13 @@ public class MainActivity extends AppCompatActivity implements MainView {
     public void showWeatherIcon(String iconUrl) {
         Picasso.with(getBaseContext()).load(iconUrl).into(imageView);
     }
+
+    @OnClick(R.id.settings)
+    public void settingsOnClick() {
+        FragmentManager fm = getFragmentManager();
+        CityListDialogFragment cityListDialogFragment = new CityListDialogFragment();
+        fm.beginTransaction().add(cityListDialogFragment, "FRAGMENT_TAG").commit();
+    }
+
+
 }

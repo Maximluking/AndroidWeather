@@ -5,7 +5,7 @@ import android.content.SharedPreferences;
 
 import com.example.alexeykozak.androidweather.R;
 import com.example.alexeykozak.androidweather.dao.WeatherDao;
-import com.example.alexeykozak.androidweather.model.Weather;
+import com.example.alexeykozak.androidweather.model.City;
 
 
 public class MainPresenterImpl implements MainPresenter {
@@ -19,17 +19,17 @@ public class MainPresenterImpl implements MainPresenter {
     }
 
     @Override
-    public void updateWeatherInfo() {
+    public void updateCityInfo() {
         int id;
         String url = "http://openweathermap.org/img/w/";
 
         SharedPreferences sharedPref = context.getSharedPreferences(context.getString(R.string.current_city_id), Context.MODE_PRIVATE);
         id = sharedPref.getInt(context.getString(R.string.current_city_id), 0);
 
-        Weather weather = WeatherDao.getInstance().getWeatherByCityId(id);
+        City city = WeatherDao.getInstance().getCity(id);
 
-        mainView.showWeather(weather);
-        mainView.showWeatherIcon(url + weather.getIcon() + ".png");
+        mainView.showWeatherForCity(city);
+        mainView.showWeatherIcon(url + city.getWeather().getIcon() + ".png");
     }
 
 
@@ -39,6 +39,6 @@ public class MainPresenterImpl implements MainPresenter {
     }
 
     public static void onWeatherReceived() {
-        new MainPresenterImpl(mainView, context).updateWeatherInfo();
+        new MainPresenterImpl(mainView, context).updateCityInfo();
     }
 }
