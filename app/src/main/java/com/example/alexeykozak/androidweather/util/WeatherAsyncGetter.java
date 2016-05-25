@@ -54,6 +54,7 @@ public class WeatherAsyncGetter extends AsyncTask<Integer, Void, List<Weather>> 
         try {
             rootJsonArray = jsonObject.getJSONArray("list");
         } catch (JSONException e) {
+
             e.printStackTrace();
         }
         if (rootJsonArray != null) {

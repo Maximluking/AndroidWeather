@@ -1,7 +1,7 @@
 package com.example.alexeykozak.androidweather.activities;
 
-import android.app.FragmentManager;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -110,9 +110,8 @@ public class MainActivity extends AppCompatActivity implements MainView {
 
     @OnClick(R.id.settings)
     public void settingsOnClick() {
-        FragmentManager fm = getFragmentManager();
-        CityListDialogFragment cityListDialogFragment = new CityListDialogFragment();
-        fm.beginTransaction().add(cityListDialogFragment, "FRAGMENT_TAG").commit();
+        startActivity(new Intent(getBaseContext(), CityListActivity.class));
+
     }
 
 

@@ -1,7 +1,9 @@
 package com.example.alexeykozak.androidweather;
 
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +19,7 @@ import java.util.List;
 public class CityAdapter extends RecyclerView.Adapter<CityAdapter.ViewHolder> {
     private static Context context;
     private List<City> cities = WeatherDao.getInstance().getAllCities();
+    private ViewGroup parent;
 
     public CityAdapter(Context context) {
         CityAdapter.context = context;
@@ -25,7 +28,7 @@ public class CityAdapter extends RecyclerView.Adapter<CityAdapter.ViewHolder> {
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.city_layout, parent, false);
-
+        this.parent = parent;
         return new ViewHolder(view);
     }
 
@@ -35,15 +38,16 @@ public class CityAdapter extends RecyclerView.Adapter<CityAdapter.ViewHolder> {
         final City city = cities.get(position);
         tvCityName.setText(city.getName());
 
-//        tvCityName.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                SharedPreferences sharedPref = context.getSharedPreferences(context.getString(R.string.current_city_id), Context.MODE_PRIVATE);
-//
-//                SharedPreferences.Editor editor = sharedPref.edit();
-//                editor.putInt(context.getString(R.string.current_city_id), city.getId()).apply();
-//            }
-//        });
+        tvCityName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences sharedPref = context.getSharedPreferences(context.getString(R.string.current_city_id), Context.MODE_PRIVATE);
+
+                SharedPreferences.Editor editor = sharedPref.edit();
+                editor.putInt(context.getString(R.string.current_city_id), city.getId()).apply();
+                ((Activity) parent.getContext()).finish();
+            }
+        });
     }
 
     @Override
@@ -58,8 +62,6 @@ public class CityAdapter extends RecyclerView.Adapter<CityAdapter.ViewHolder> {
         public ViewHolder(View itemView) {
             super(itemView);
             tvCityName = (TextView) itemView.findViewById(R.id.tv_dialog_city_name);
-
-
         }
 
         public TextView getTvCityName() {
