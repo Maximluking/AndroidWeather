@@ -1,7 +1,7 @@
 package com.example.alexeykozak.androidweather.activities;
 
-import android.app.Activity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -14,7 +14,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 
-public class CityListActivity extends Activity {
+public class CityListActivity extends AppCompatActivity {
 
     private static final String TAG = "CityListActivity";
     @BindView(R.id.city_recycler_view)

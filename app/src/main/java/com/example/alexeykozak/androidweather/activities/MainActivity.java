@@ -27,8 +27,6 @@ public class MainActivity extends AppCompatActivity implements MainView {
     private static final String TAG = "MainActivity";
     private static final String CELSIUS_DEGREE = "°C";
     private static final String DIVIDER = "/";
-    private static final String FRAGMENT_TAG = "ListOfCities";
-
 
     @BindView(R.id.weather_icon)
     ImageView imageView;
@@ -40,7 +38,6 @@ public class MainActivity extends AppCompatActivity implements MainView {
     TextView tvMaxMinTemp;
     @BindView(R.id.tv_weather_description)
     TextView tvWeatherDescription;
-
 
     private MainPresenter presenter;
     private Unbinder unbinder;
@@ -111,8 +108,5 @@ public class MainActivity extends AppCompatActivity implements MainView {
     @OnClick(R.id.settings)
     public void settingsOnClick() {
         startActivity(new Intent(getBaseContext(), CityListActivity.class));
-
     }
-
-
 }
