@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity implements MainView {
             editor.putInt(getString(R.string.current_city_id), 709930).apply();
         }
 
-        presenter.makeRequest();
+        presenter.setTask();
     }
 
     @Override

@@ -2,16 +2,17 @@ package com.example.alexeykozak.androidweather.activities;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.example.alexeykozak.androidweather.R;
 import com.example.alexeykozak.androidweather.dao.WeatherDao;
 import com.example.alexeykozak.androidweather.model.City;
 import com.example.alexeykozak.androidweather.util.InternetConnectionChecker;
-import com.example.alexeykozak.androidweather.util.WeatherAsyncGetter;
+import com.example.alexeykozak.androidweather.util.WeatherHelper;
 
-import java.util.concurrent.ExecutionException;
+import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 
 public class MainPresenterImpl implements MainPresenter {
@@ -40,15 +41,25 @@ public class MainPresenterImpl implements MainPresenter {
     }
 
     @Override
-    public void makeRequest() {
+    public void setTask() {
+
+        List<City> cities = WeatherDao.getInstance().getAllCities();
+        final Integer[] cityIds = new Integer[cities.size()];
+
+        for (int i = 0; i < cities.size(); i++) {
+            cityIds[i] = cities.get(i).getId();
+        }
+
         if (InternetConnectionChecker.isNetworkConnected(context)) {
-            WeatherAsyncGetter weatherAsyncGetter = new WeatherAsyncGetter(context);
-            weatherAsyncGetter.execute(709930, 702550, 696050);
-            try {
-                Log.d(TAG, String.valueOf(weatherAsyncGetter.get().size()));
-            } catch (InterruptedException | ExecutionException e) {
-                e.printStackTrace();
-            }
+            Timer timer = new Timer();
+            TimerTask task = new TimerTask() {
+                @Override
+                public void run() {
+                    WeatherHelper.makeRequest(cityIds, context);
+                }
+            };
+            timer.schedule(task, 0, 30 * 60 * 1000);
+
         } else {
             Toast.makeText(context, "No internet connection", Toast.LENGTH_LONG).show();
         }
